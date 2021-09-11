@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Subscribers</string>
+
+    <!--SubscriberFragment-->
+    <string name="label_email">Email</string>
+    <string name="label_name">Name</string>
+    <string name="label_subscriber">Subscriber</string>
+
+    <string name="subscriber_inserted_successfully">Subscriber created</string>
+    <string name="subscriber_error_insert">Subscriber error</string>
+
 </resources>
