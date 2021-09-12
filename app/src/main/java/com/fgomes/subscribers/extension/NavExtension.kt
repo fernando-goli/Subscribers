@@ -1,6 +1,7 @@
 package com.fgomes.subscribers.extension
 
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import com.fgomes.subscribers.R
 
@@ -16,4 +17,11 @@ fun NavController.navigateWithAnimations(
     animation: NavOptions = slideLeftOptions
 ){
     this.navigate(destinationId,null, animation)
+}
+
+fun NavController.navigateWithAnimations(
+    directions: NavDirections,
+    animation: NavOptions = slideLeftOptions
+){
+    this.navigate(directions, animation)
 }
