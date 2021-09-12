@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.fgomes.subscribers.R
 import com.fgomes.subscribers.data.db.AppDatabase
 import com.fgomes.subscribers.data.db.dao.SubscriberDao
 import com.fgomes.subscribers.databinding.SubscriberListFragmentBinding
+import com.fgomes.subscribers.extension.navigateWithAnimations
 import com.fgomes.subscribers.repository.DatabaseDataSource
 import com.fgomes.subscribers.repository.SubscriberRepository
-import com.fgomes.subscribers.ui.subscriber.SubscriberViewModel
 
 class SubscriberListFragment : Fragment() {
 
@@ -27,7 +29,7 @@ class SubscriberListFragment : Fragment() {
                     AppDatabase.getDatabase(requireContext()).subscriberDao()
 
                 val repository : SubscriberRepository = DatabaseDataSource(subscriberDao)
-                return SubscriberViewModel(repository) as T
+                return SubscriberListViewModel(repository) as T
             }
         }
     }
@@ -45,8 +47,26 @@ class SubscriberListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observerViewModelEvents()
+        configureViewListeners()
 
+    }
 
+    private fun observerViewModelEvents() {
+        viewModel.allSubscriberEvent.observe(viewLifecycleOwner) { allSubs ->
+            val subscriberListAdapter = SubscriberListAdapter(allSubs)
+
+            with(binding.rvSubs) {
+                setHasFixedSize(true)
+                adapter = subscriberListAdapter
+            }
+        }
+    }
+
+    private fun configureViewListeners(){
+        binding.fabAddSubscriber.setOnClickListener {
+            findNavController().navigateWithAnimations(R.id.subscriberFragment)
+        }
     }
 
 }
