@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import com.fgomes.subscribers.data.db.AppDatabase
 import com.fgomes.subscribers.data.db.dao.SubscriberDao
 import com.fgomes.subscribers.databinding.SubscriberFragmentBinding
@@ -58,6 +59,8 @@ class SubscriberFragment : Fragment() {
                     clearFields()
                     hideKeyboard()
                     requireView().requestFocus()
+
+                    findNavController().popBackStack()
                 }
             }
         }
