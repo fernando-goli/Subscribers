@@ -4,9 +4,15 @@
     <!--SubscriberFragment-->
     <string name="label_email">Email</string>
     <string name="label_name">Name</string>
-    <string name="label_subscriber">Subscriber</string>
+    <string name="label_subscriber">Add New Sub</string>
+    <string name="label_delete_subscriber">Delete Subscriber</string>
 
-    <string name="subscriber_inserted_successfully">Subscriber created</string>
+    <string name="subscriber_inserted_successfully">Subscriber was successfully inserted</string>
+    <string name="subscriber_deleted_successfully">Subscriber was successfully deleted</string>
+    <string name="subscriber_updated_sucess">Subscriber was successfully updated</string>
     <string name="subscriber_error_insert">Subscriber error</string>
+    <string name="subscriber_error_update">Subscriber error</string>
+    <string name="subscriber_error_delete">Subscriber error</string>
+    <string name="subscriber_bt_update">Update</string>
 
 </resources>

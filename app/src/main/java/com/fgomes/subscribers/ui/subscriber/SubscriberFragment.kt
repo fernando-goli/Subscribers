@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.fgomes.subscribers.R
 import com.fgomes.subscribers.data.db.AppDatabase
 import com.fgomes.subscribers.data.db.dao.SubscriberDao
 import com.fgomes.subscribers.databinding.SubscriberFragmentBinding
@@ -36,6 +38,8 @@ class SubscriberFragment : Fragment() {
         }
     }
 
+    private val args: SubscriberFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,6 +52,15 @@ class SubscriberFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+            args.subscriber?.let{ subscriberEntity ->
+                binding.btSubscriber.text = getString(R.string.subscriber_bt_update)
+                binding.tieName.setText(subscriberEntity.name)
+                binding.tieEmail.setText(subscriberEntity.email)
+
+                binding.btDeleteSubscriber.visibility = View.VISIBLE
+            }
+
             observeEvents()
             setListeners()
     }
@@ -55,13 +68,16 @@ class SubscriberFragment : Fragment() {
     private fun observeEvents() {
         viewModel.subscriberStateEventData.observe(viewLifecycleOwner) { subscriberState ->
             when (subscriberState) {
-                is SubscriberViewModel.SubscriberState.Inserted -> {
+                is SubscriberViewModel.SubscriberState.Inserted,
+                is SubscriberViewModel.SubscriberState.Deleted,
+                is SubscriberViewModel.SubscriberState.Updated -> {
                     clearFields()
                     hideKeyboard()
                     requireView().requestFocus()
-
                     findNavController().popBackStack()
                 }
+
+
             }
         }
 
@@ -87,8 +103,13 @@ class SubscriberFragment : Fragment() {
             val name = binding.tieName.text.toString()
             val email = binding.tieEmail.text.toString()
             if (name.isNotBlank() && email.isNotBlank()) {
-                viewModel.addSubscriber(name, email)
+                viewModel.addOrUpdateSubscriber(name, email, args.subscriber?.id ?: 0)
             }
+
+        }
+
+        binding.btDeleteSubscriber.setOnClickListener {
+            viewModel.deleteSubscriber(args.subscriber?.id ?: 0)
         }
     }
 
