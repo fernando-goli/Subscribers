@@ -5,38 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fgomes.subscribers.R
-import com.fgomes.subscribers.data.db.AppDatabase
-import com.fgomes.subscribers.data.db.dao.SubscriberDao
 import com.fgomes.subscribers.databinding.SubscriberFragmentBinding
 import com.fgomes.subscribers.extension.hideKeyboard
-import com.fgomes.subscribers.repository.DatabaseDataSource
-import com.fgomes.subscribers.repository.SubscriberRepository
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SubscriberFragment : Fragment() {
-//R.layout.subscriber_fragment
 
     private var _binding: SubscriberFragmentBinding? = null
     private val binding:  SubscriberFragmentBinding get() = _binding!!
 
-    private val viewModel: SubscriberViewModel by viewModels {
-        object : ViewModelProvider.Factory{
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                val subscriberDao: SubscriberDao =
-                    AppDatabase.getDatabase(requireContext()).subscriberDao()
-
-                val repository : SubscriberRepository = DatabaseDataSource(subscriberDao)
-                return SubscriberViewModel(repository) as T
-            }
-        }
-    }
+    private val viewModel: SubscriberViewModel by viewModel()
 
     private val args: SubscriberFragmentArgs by navArgs()
 

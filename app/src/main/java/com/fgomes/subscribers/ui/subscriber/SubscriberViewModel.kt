@@ -78,4 +78,14 @@ class SubscriberViewModel(
         private val TAG = SubscriberViewModel::class.java.simpleName
     }
 
+    /*class SubscriberViewModelFactory(){
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            val subscriberDao: SubscriberDao =
+                AppDatabase.getDatabase(requireContext()).subscriberDao()
+
+            val repository : SubscriberRepository = DatabaseDataSource(subscriberDao)
+            return SubscriberViewModel(repository) as T
+        }
+    }*/
+
 }
